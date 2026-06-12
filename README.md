@@ -5,6 +5,8 @@ Prize Dataset**. It learns user preferences, predicts unseen ratings, generates
 Top‑K personalized recommendations, and reports the mandatory **RMSE** and
 **MAP@10** metrics (plus optional ranking metrics).
 
+**READ Technical_Report.pdf** for evaluation
+
 The repository implements and compares **four** recommendation approaches:
 
 | Model | Family | Idea |
