@@ -1,0 +1,53 @@
+# =====================================================================
+# Configuration for the Netflix Prize recommendation system pipeline.
+# Every script reads this file so that results are reproducible.
+# =====================================================================
+
+seed: 42
+
+paths:
+  raw_dir: data/raw                 # combined_data_*.txt + movie_titles.csv
+  processed_dir: data/processed     # cached parquet/npz after parsing
+  artifacts_dir: artifacts          # trained model files
+  figures_dir: figures              # EDA / result plots
+  outputs_dir: outputs              # metrics + recommendation csv/json
+
+data:
+  # Which combined_data files to read (1..4). Use fewer for a quick run.
+  combined_files: [1]
+  # Sub-sampling to keep the problem tractable on a laptop.
+  # Keep only users / movies with at least this many ratings.
+  min_ratings_per_user: 20
+  min_ratings_per_movie: 50
+  # Optionally cap the number of users (null = keep all that pass filters).
+  max_users: 20000
+
+split:
+  # Per-user temporal hold-out: the most recent `test_quota` fraction of each
+  # user's ratings goes to the test set (realistic, avoids leakage).
+  strategy: temporal        # temporal | random
+  test_quota: 0.2
+  min_train_per_user: 5
+
+evaluation:
+  k: 10                     # Top-K for ranking metrics
+  relevance_threshold: 3.5  # rating >= 3.5 counts as a relevant hit
+
+models:
+  baseline:
+    reg_user: 10.0
+    reg_item: 25.0
+  item_cf:
+    k_neighbors: 50
+    shrinkage: 100.0
+    min_support: 5
+  user_cf:
+    k_neighbors: 50
+    shrinkage: 100.0
+    min_support: 3
+  svd:
+    n_factors: 50
+    n_epochs: 25
+    lr: 0.005
+    reg: 0.02
+    batch_size: 100000

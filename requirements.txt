@@ -1,0 +1,11 @@
+# Core scientific stack (all pure NumPy/pandas; no SciPy required)
+numpy>=1.23
+pandas>=1.5
+matplotlib>=3.6
+PyYAML>=6.0
+
+# Optional (nicer EDA plots; code degrades gracefully if absent)
+seaborn>=0.12
+
+# Optional (faster parquet caching of the parsed ratings)
+pyarrow>=10.0
